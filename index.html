@@ -46,9 +46,65 @@ body {
   color: var(--text);
   line-height: 1.7;
 
+  position: relative;
+  overflow-x: hidden;
+
   transition:
     background 0.35s ease,
     color 0.35s ease;
+}
+
+body::before,
+body::after {
+  bottom: -220px;
+  right: -140px;
+
+  background: #7c4dff;
+}
+
+body::selection {
+  background: rgba(255,255,255,0.14);
+}
+
+body.light-mode::selection,
+body.preview-light::selection {
+  background: rgba(0,0,0,0.08);
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.035;
+
+  z-index: 9999;
+
+  background-image:
+    radial-gradient(rgba(255,255,255,0.22) 0.6px, transparent 0.6px);
+
+  background-size: 6px 6px;
+
+  mix-blend-mode: soft-light;
+}
+
+body.light-mode .noise,
+body.preview-light .noise {
+  opacity: 0.02;
+  mix-blend-mode: multiply;
+}
+
+body.light-mode::before,
+body.preview-light::before {
+  opacity: 0.11;
+  background: #8ba7ff;
+}
+
+body.light-mode::after,
+body.preview-light::after {
+  opacity: 0.09;
+  background: #b69cff;
 }
 
 nav {
@@ -178,8 +234,127 @@ body.preview-dark .toggle-thumb {
 }
 
 .hero {
-  padding: 7rem 4rem 5rem;
-  max-width: 900px;
+  padding: 8rem 4rem 6rem;
+  max-width: 1100px;
+
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+
+  position: absolute;
+  top: 120px;
+  left: 120px;
+
+  width: 320px;
+  height: 320px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(255,255,255,0.08),
+    transparent 70%
+  );
+
+  filter: blur(40px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+body.light-mode .hero::before,
+body.preview-light .hero::before {
+  background: radial-gradient(
+    circle,
+    rgba(0,0,0,0.05),
+    transparent 70%
+  );
+}
+
+.terminal-box {
+  width: 100%;
+  max-width: 640px;
+
+  margin-bottom: 3rem;
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(14px);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.terminal-box:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.22),
+    0 0 40px rgba(255,255,255,0.05);
+}
+
+body.light-mode .terminal-box:hover,
+body.preview-light .terminal-box:hover {
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.08),
+    0 0 35px rgba(0,0,0,0.03);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.9rem 1rem;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.terminal-header span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+
+  transition: all 0.35s ease;
+}
+
+.terminal-header span:nth-child(1) {
+  background: #ff5f57;
+}
+
+.terminal-header span:nth-child(2) {
+  background: #febc2e;
+}
+
+.terminal-header span:nth-child(3) {
+  background: #28c840;
+}
+
+
+
+.terminal-content {
+  padding: 1.2rem 1.5rem;
+
+  font-family: monospace;
+  font-size: 0.95rem;
+
+  color: var(--muted);
+
+  line-height: 1.9;
+}
+
+.terminal-accent,
+.terminal-content p:first-child {
+  color: var(--text);
 }
 
 .hero-tag {
@@ -192,10 +367,13 @@ body.preview-dark .toggle-thumb {
 
 .hero h1 {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(3rem, 6vw, 5rem);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.5rem;
+  font-size: clamp(3.4rem, 7vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+
+  max-width: 820px;
+
+  margin-bottom: 2rem;
 }
 
 .hero h1 em {
@@ -204,16 +382,17 @@ body.preview-dark .toggle-thumb {
 }
 
 .hero p {
-  max-width: 620px;
+  max-width: 680px;
   color: var(--muted);
   font-size: 1.08rem;
-  line-height: 1.9;
-  margin-bottom: 2.5rem;
+  line-height: 1.95;
+  margin-bottom: 2.8rem;
   font-weight: 300;
 }
 
 .hero-cta {
   display: flex;
+  align-items: center;
   gap: 1rem;
   flex-wrap: wrap;
 }
@@ -264,20 +443,95 @@ section {
   gap: 1.5rem;
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(10px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0px);
+  filter: blur(0px);
+}
+
 .project-card {
+  position: relative;
+
   background: rgba(255,255,255,0.02);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 18px;
   padding: 1.8rem;
 
+  overflow: hidden;
+
   backdrop-filter: blur(12px);
 
-  transition: all 0.35s ease;
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+}
+
+.project-card::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at top left,
+    rgba(255,255,255,0.12),
+    transparent 45%
+  );
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+
+  pointer-events: none;
+}
+
+body.light-mode .project-card::before,
+body.preview-light .project-card::before {
+  background: radial-gradient(
+    circle at top left,
+    rgba(0,0,0,0.05),
+    transparent 45%
+  );
+}
+
+.project-card:hover::before {
+  opacity: 1;
 }
 
 .project-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transform: translateY(-8px);
+
+  border-color: rgba(255,255,255,0.12);
+
+  background: rgba(255,255,255,0.035);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.22),
+    0 0 0 1px rgba(255,255,255,0.02) inset;
+}
+
+body.light-mode .project-card:hover,
+body.preview-light .project-card:hover {
+  border-color: rgba(0,0,0,0.08);
+
+  background: rgba(255,255,255,0.9);
+
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.08),
+    0 0 0 1px rgba(0,0,0,0.02) inset;
 }
 
 .project-num {
@@ -348,6 +602,8 @@ footer p {
 
 <body>
 
+<div class="noise"></div>
+
 <nav>
 
   <div class="nav-logo">Pawan Poojary</div>
@@ -368,28 +624,37 @@ footer p {
 
 <div class="hero">
 
-  <p class="hero-tag">
-    Student · Developer · Builder
-  </p>
+  <div class="terminal-box reveal">
+    <div class="terminal-header">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
 
-  <h1>
+    <div class="terminal-content">
+      <p><span class="terminal-accent">$</span> whoami</p>
+      <p>Student • Developer • Builder</p>
+    </div>
+  </div>
+
+  <h1 class="reveal">
     Hi, I'm <em>Pawan</em> —<br>
     I build things for the web and beyond.
   </h1>
 
-  <p>
+  <p class="reveal">
     A curious developer exploring everything from Python and web development
     to self-hosted services, Linux, networking, automation, and homelab setups.
   </p>
 
-  <div class="hero-cta">
+  <div class="hero-cta reveal">
     <a href="#work" class="btn btn-primary">View my work</a>
     <a href="#contact" class="btn btn-outline">Get in touch</a>
   </div>
 
 </div>
 
-<section id="work">
+<section id="work" class="reveal">
 
   <p class="section-label">Selected work</p>
 
@@ -470,24 +735,46 @@ toggle.addEventListener("click", () => {
 
 });
 
-toggle.addEventListener("mouseenter", () => {
+if (window.matchMedia('(hover: hover)').matches) {
 
-  const isLight = document.body.classList.contains("light-mode");
+  toggle.addEventListener("mouseenter", () => {
 
-  if (isLight) {
-    document.body.classList.add("preview-dark");
-  } else {
-    document.body.classList.add("preview-light");
-  }
+    const isLight = document.body.classList.contains("light-mode");
 
+    if (isLight) {
+      document.body.classList.add("preview-dark");
+    } else {
+      document.body.classList.add("preview-light");
+    }
+
+  });
+
+  toggle.addEventListener("mouseleave", () => {
+
+    document.body.classList.remove("preview-light");
+    document.body.classList.remove("preview-dark");
+
+  });
+
+}
+
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver((entries) => {
+
+  entries.forEach((entry) => {
+
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+
+  });
+
+}, {
+  threshold: 0.12
 });
 
-toggle.addEventListener("mouseleave", () => {
-
-  document.body.classList.remove("preview-light");
-  document.body.classList.remove("preview-dark");
-
-});
+reveals.forEach((el) => observer.observe(el));
 
 </script>
 

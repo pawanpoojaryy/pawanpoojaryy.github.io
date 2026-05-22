@@ -3,78 +3,285 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <title>Pawan Poojary — Portfolio</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   :root {
     --bg: #fafaf8;
-    --text: #1a1a18;
-    --muted: #7a7a72;
-    --accent: #1a1a18;
-    --border: #e8e8e2;
+    --text: #171717;
+    --muted: #6d6d67;
+    --border: #e7e7e0;
     --card: #ffffff;
   }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
-  nav { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 4rem; border-bottom: 1px solid var(--border); }
-  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; letter-spacing: -0.01em; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 400; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
 
-  .hero { padding: 7rem 4rem 5rem; max-width: 860px; }
-  .hero-tag { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem; }
-  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.8rem, 6vw, 4.5rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-  .hero h1 em { font-style: italic; color: var(--muted); }
-  .hero p { font-size: 1.1rem; color: var(--muted); max-width: 480px; line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300; }
-  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn { display: inline-block; padding: 0.7rem 1.6rem; font-size: 0.9rem; font-weight: 500; border-radius: 100px; text-decoration: none; transition: all 0.2s; }
-  .btn-primary { background: var(--text); color: #fff; }
-  .btn-primary:hover { opacity: 0.8; }
-  .btn-outline { border: 1px solid var(--border); color: var(--text); }
-  .btn-outline:hover { background: var(--border); }
+  html {
+    scroll-behavior: smooth;
+  }
 
-  section { padding: 5rem 4rem; border-top: 1px solid var(--border); }
-  .section-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2.5rem; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
 
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-  .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-  .project-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-  .project-num { font-size: 0.75rem; color: var(--muted); margin-bottom: 1rem; }
-  .project-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.3rem; margin-bottom: 0.6rem; }
-  .project-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; font-weight: 300; }
-  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { font-size: 0.75rem; padding: 3px 10px; border: 1px solid var(--border); border-radius: 100px; color: var(--muted); }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(250,250,248,0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+  }
 
-  .about-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: start; }
-  .about-photo { width: 100%; aspect-ratio: 3/4; background: var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-  .photo-placeholder { font-size: 0.8rem; color: var(--muted); text-align: center; padding: 1rem; }
-  .about-text h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 1.25rem; }
-  .about-text p { color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1rem; }
-  .skills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+  }
 
-  .contact-inner { max-width: 520px; }
-  .contact-inner h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 1rem; }
-  .contact-inner p { color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 2rem; }
-  .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
 
-  footer { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-  footer p { font-size: 0.8rem; color: var(--muted); }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.92rem;
+    transition: 0.2s;
+  }
 
-  @media (max-width: 640px) {
-    nav, .hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-    .hero { padding-top: 4rem; }
-    .about-inner { grid-template-columns: 1fr; }
-    .about-photo { aspect-ratio: 1; }
+  .nav-links a:hover {
+    color: var(--text);
+  }
+
+  .hero {
+    padding: 7rem 4rem 5rem;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .hero p {
+    max-width: 620px;
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.6rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.85;
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .btn-outline:hover {
+    background: var(--border);
+  }
+
+  section {
+    padding: 5rem 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: 0.25s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+  }
+
+  .project-num {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-card p {
+    color: var(--muted);
+    font-size: 0.94rem;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .about {
+    max-width: 850px;
+  }
+
+  .about h2,
+  .contact h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .about p,
+  .contact p {
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.9;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer p {
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  @media(max-width: 768px) {
+
+    nav,
+    .hero,
+    section,
+    footer {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .hero {
+      padding-top: 4rem;
+    }
+
+    .nav-links {
+      gap: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+    }
   }
 </style>
 </head>
+
 <body>
 
 <nav>
-  <span class="nav-logo">Pawan Poojary</span>
+  <div class="nav-logo">Pawan Poojary</div>
+
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
@@ -83,90 +290,177 @@
 </nav>
 
 <div class="hero">
-  <p class="hero-tag">Student · Developer · Builder</p>
-  <h1>Hi, I'm <em>Your Name</em> —<br>I build things for the web.</h1>
-  <p>A curious student passionate about creating useful, well-crafted digital experiences. Currently studying at [Your University].</p>
+
+  <p class="hero-tag">
+    Student · Developer · Builder
+  </p>
+
+  <h1>
+    Hi, I'm <em>Pawan</em> —<br>
+    I build things for the web and beyond.
+  </h1>
+
+  <p>
+    A curious developer exploring everything from Python and web development
+    to self-hosted services, Linux, networking, automation, and homelab setups.
+    I enjoy building practical systems, experimenting with tech, and learning
+    by breaking and rebuilding things.
+  </p>
+
   <div class="hero-cta">
     <a href="#work" class="btn btn-primary">View my work</a>
+
     <a href="#contact" class="btn btn-outline">Get in touch</a>
   </div>
+
 </div>
 
 <section id="work">
+
   <p class="section-label">Selected work</p>
+
   <div class="projects-grid">
+
     <div class="project-card">
       <p class="project-num">01</p>
-      <h3>Project Title</h3>
-      <p>A brief description of what this project does and what problem it solves. One or two sentences is plenty.</p>
+
+      <h3>Personal Homelab</h3>
+
+      <p>
+        Built and managed a self-hosted setup using Docker and WSL, experimenting
+        with Pi-hole, networking, DNS filtering, and lightweight server workflows.
+      </p>
+
       <div class="tags">
-        <span class="tag">React</span>
-        <span class="tag">Node.js</span>
-        <span class="tag">MongoDB</span>
+        <span class="tag">Docker</span>
+        <span class="tag">WSL</span>
+        <span class="tag">Linux</span>
+        <span class="tag">Pi-hole</span>
       </div>
     </div>
+
     <div class="project-card">
       <p class="project-num">02</p>
-      <h3>Another Project</h3>
-      <p>Describe the challenge you tackled here. Focus on your contribution and the outcome or impact.</p>
+
+      <h3>Media & Automation Setup</h3>
+
+      <p>
+        Organized and automated personal media workflows using Plex, FileBot,
+        Rclone, and cloud-based file management tools.
+      </p>
+
       <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">Flask</span>
-        <span class="tag">PostgreSQL</span>
+        <span class="tag">Plex</span>
+        <span class="tag">Rclone</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Networking</span>
       </div>
     </div>
+
     <div class="project-card">
       <p class="project-num">03</p>
-      <h3>Side Project</h3>
-      <p>Even small personal or academic projects count. Describe what you learned or built over a weekend.</p>
+
+      <h3>Portfolio Website</h3>
+
+      <p>
+        Designed and deployed a minimalist personal portfolio using pure HTML
+        and CSS, hosted through GitHub Pages and developed locally.
+      </p>
+
       <div class="tags">
         <span class="tag">HTML</span>
         <span class="tag">CSS</span>
-        <span class="tag">JavaScript</span>
+        <span class="tag">GitHub Pages</span>
+        <span class="tag">Git</span>
       </div>
     </div>
+
   </div>
+
 </section>
 
 <section id="about">
+
   <p class="section-label">About me</p>
-  <div class="about-inner">
-    <div class="about-photo">
-      <p class="photo-placeholder">Your photo here</p>
+
+  <div class="about">
+
+    <h2>A bit about me</h2>
+
+    <p>
+      I'm a student and self-driven developer who enjoys understanding how
+      systems work under the hood — whether that's web applications, Linux,
+      networking, containers, or cloud tools.
+    </p>
+
+    <p>
+      Most of what I learn comes from experimenting hands-on, troubleshooting
+      issues, and building things that are actually useful in day-to-day life.
+      Recently I've been exploring self-hosting, automation workflows,
+      and backend-focused tools.
+    </p>
+
+    <p>
+      Outside of tech, I enjoy discovering new tools, optimizing setups,
+      and turning random ideas into working projects.
+    </p>
+
+    <div class="skills">
+
+      <span class="tag">Python</span>
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">Git</span>
+      <span class="tag">Linux</span>
+      <span class="tag">Docker</span>
+      <span class="tag">WSL</span>
+      <span class="tag">Networking</span>
+      <span class="tag">GitHub</span>
+      <span class="tag">Plex</span>
+
     </div>
-    <div class="about-text">
-      <h2>A bit about me</h2>
-      <p>I'm a student at [Your University] studying [Your Major]. I love building things that live on the internet — from small tools to full-stack applications.</p>
-      <p>When I'm not coding, you'll find me [your hobby], [another interest], or exploring new technologies just for fun.</p>
-      <p>I'm currently open to internships and entry-level opportunities.</p>
-      <div class="skills">
-        <span class="tag">JavaScript</span>
-        <span class="tag">Python</span>
-        <span class="tag">React</span>
-        <span class="tag">Git</span>
-        <span class="tag">SQL</span>
-        <span class="tag">Figma</span>
-      </div>
-    </div>
+
   </div>
+
 </section>
 
 <section id="contact">
-  <div class="contact-inner">
+
+  <div class="contact">
+
     <p class="section-label">Contact</p>
-    <h2>Let's work together</h2>
-    <p>Whether you have a project in mind, a question, or just want to say hi — my inbox is always open.</p>
+
+    <h2>Let's connect</h2>
+
+    <p>
+      Whether it's a project, collaboration, or just a tech conversation —
+      feel free to reach out.
+    </p>
+
     <div class="contact-links">
-      <a href="mailto:you@email.com" class="btn btn-primary">Email me</a>
-      <a href="https://github.com/yourusername" class="btn btn-outline">GitHub</a>
-      <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline">LinkedIn</a>
+
+      <a href="mailto:yourmail@email.com" class="btn btn-primary">
+        Email me
+      </a>
+
+      <a href="https://github.com/pawanpoojaryy" class="btn btn-outline">
+        GitHub
+      </a>
+
     </div>
+
   </div>
+
 </section>
 
 <footer>
-  <p>© 2026 Your Name</p>
-  <p>Built with HTML & CSS · Hosted on GitHub Pages</p>
+
+  <p>© 2026 Pawan Poojary</p>
+
+  <p>
+    Built with HTML & CSS · Hosted on GitHub Pages
+  </p>
+
 </footer>
 
 </body>
